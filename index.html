@@ -1,0 +1,179 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><meta property="og:type" content="website"/>
+<meta property="og:title" content="Notion Code Preview"/>
+<meta property="og:description" content="Built with Notion Code Previewer"/>
+<meta property="og:image" content="https://orot-ai.github.io/notion-preview-36ccc367/og-image-00q2m13u.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://orot-ai.github.io/notion-preview-36ccc367/og-image-00q2m13u.png"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+* { box-sizing: border-box; }
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Apple SD Gothic Neo', sans-serif;
+	background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+	min-height: 100vh;
+	color: #1e293b;
+}
+
+.app-wrap {
+	max-width: 720px;
+	margin: 0 auto;
+	padding: 3rem 1.25rem 4rem;
+}
+
+.app-header {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+.app-header h1 {
+	margin: 0 0 .5rem;
+	font-size: 2rem;
+	font-weight: 700;
+	color: #4338ca;
+}
+.app-header p {
+	margin: 0;
+	color: #64748b;
+	font-size: .95rem;
+}
+
+.summary {
+	display: flex;
+	justify-content: center;
+	gap: 1.5rem;
+	margin-bottom: 1.5rem;
+	color: #475569;
+	font-size: .9rem;
+}
+.summary strong { color: #4338ca; font-size: 1.1rem; }
+
+.tabs {
+	display: flex;
+	justify-content: center;
+	gap: .5rem;
+	margin-bottom: 1.25rem;
+}
+.tab-btn {
+	padding: .5rem 1rem;
+	border: 1px solid #e2e8f0;
+	border-radius: 9999px;
+	background: #fff;
+	color: #475569;
+	font-size: .85rem;
+	cursor: pointer;
+	transition: all .2s;
+}
+.tab-btn:hover { border-color: #6366f1; color: #4338ca; }
+.tab-btn.active {
+	background: #6366f1;
+	color: #fff;
+	border-color: #6366f1;
+}
+
+.todo-list {
+	display: flex;
+	flex-direction: column;
+	gap: .75rem;
+}
+
+.todo-card {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 1rem 1.25rem;
+	background: #fff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, .04);
+	transition: all .2s;
+}
+.todo-card:hover {
+	border-color: #c7d2fe;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(99, 102, 241, .08);
+}
+.todo-card.done { opacity: .55; }
+.todo-card.done .todo-title { text-decoration: line-through; color: #94a3b8; }
+
+.checkmark {
+	width: 22px;
+	height: 22px;
+	border-radius: 50%;
+	border: 2px solid #cbd5e1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	color: #fff;
+	flex-shrink: 0;
+}
+.checkmark.done {
+	background: #10b981;
+	border-color: #10b981;
+}
+
+.todo-body { flex: 1; min-width: 0; }
+.todo-title {
+	font-size: 1rem;
+	font-weight: 500;
+	color: #1e293b;
+	margin-bottom: .35rem;
+}
+.todo-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .5rem;
+	font-size: .75rem;
+	color: #64748b;
+}
+
+.chip {
+	display: inline-flex;
+	align-items: center;
+	padding: .15rem .55rem;
+	border-radius: 9999px;
+	font-weight: 500;
+}
+.chip.priority-높음 { background: #fee2e2; color: #b91c1c; }
+.chip.priority-중간 { background: #fef3c7; color: #b45309; }
+.chip.priority-낮음 { background: #f1f5f9; color: #475569; }
+
+.chip.cat-업무 { background: #dbeafe; color: #1d4ed8; }
+.chip.cat-개인 { background: #d1fae5; color: #047857; }
+.chip.cat-학습 { background: #ede9fe; color: #6d28d9; }
+
+.due {
+	color: #475569;
+	display: inline-flex;
+	align-items: center;
+	gap: .2rem;
+}
+.due.overdue { color: #dc2626; font-weight: 600; }
+
+.state-msg {
+	text-align: center;
+	padding: 3rem 1rem;
+	color: #64748b;
+	font-size: .95rem;
+}
+.state-msg.error { color: #dc2626; }
+</style>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script>if(window.Babel)Babel.disableScriptTags=true;</script>
+</head><body><div id="root"></div>
+<title>할일 관리</title>
+<meta name="description" content="노션 DB와 연동되는 간단한 할일 관리 앱">
+<meta property="og:title" content="할일 관리">
+<meta property="og:description" content="오늘 할 일을 한눈에 정리하세요. 노션 DB와 실시간 연동됩니다.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%236366f1'/><text x='16' y='22' text-anchor='middle' font-size='18' fill='white' font-family='sans-serif'>할</text></svg>"><script type="module">
+var __stripPlugin=function(){return{visitor:{ImportDeclaration:function(path){var src=path.node.source.value;if(src.indexOf("./")===0||src.indexOf("../")===0)path.remove();},ExportDefaultDeclaration:function(path){var decl=path.node.declaration;if(decl.type==="FunctionDeclaration"||decl.type==="ClassDeclaration"){path.replaceWith(decl);}else{path.replaceWith({type:"VariableDeclaration",kind:"var",declarations:[{type:"VariableDeclarator",id:{type:"Identifier",name:"_default"},init:decl}]});}},ExportNamedDeclaration:function(path){if(path.node.declaration){path.replaceWith(path.node.declaration);}else{path.remove();}},ExportAllDeclaration:function(path){path.remove();}}};};
+var __dedupePlugin=function(){var _s={};return{visitor:{VariableDeclaration:function(p){if(p.parent.type!=="Program")return;if(p.node.kind!=="const"&&p.node.kind!=="let")return;var kept=[];for(var i=0;i<p.node.declarations.length;i++){var d=p.node.declarations[i];var n=d.id&&d.id.type==="Identifier"?d.id.name:null;if(n&&_s[n]){}else{if(n)_s[n]=true;kept.push(d);}}if(kept.length===0){p.remove();}else{p.node.declarations=kept;}}}}};
+var __jsxDecodePlugin=function(){function _d(v){v=v.replace(/\\u\{([0-9a-fA-F]+)\}/g,function(_,h){return String.fromCodePoint(parseInt(h,16));});v=v.replace(/\\u([0-9a-fA-F]{4})/g,function(_,h){return String.fromCharCode(parseInt(h,16));});return v;}return{visitor:{JSXText:function(p){p.node.value=_d(p.node.value);},StringLiteral:function(p){if(!p.parent||p.parent.type!=="JSXAttribute")return;p.node.value=_d(p.node.value);}}}};
+var __code="import React from 'https://esm.sh/react';\nimport ReactDOM from 'https://esm.sh/react-dom/client';\nimport { useState, useEffect, useMemo } from 'https://esm.sh/react';\n\n// 🔑 Step 5: 위 Todos DB 페이지 URL의 32자리 hex ID를 붙여넣으세요\nconst DB_ID = 'PASTE_TODOS_DB_ID_HERE';\n\nconst TABS = [\n\t{ key: 'all', label: '전체' },\n\t{ key: 'todo', label: '진행중' },\n\t{ key: 'done', label: '완료' },\n];\n\nconst PRIORITY_ORDER = { '높음': 0, '중간': 1, '낮음': 2 };\n\nconst FALLBACK_TODOS = [\n\t{ id: 'sample-1', title: '엔젤스쉐어 세션 자료 최종 검토', done: false, priority: '높음', category: '업무', due: '2026-04-25' },\n\t{ id: 'sample-2', title: '미시소 OS v2 메모리 정리', done: false, priority: '중간', category: '업무', due: '2026-04-28' },\n\t{ id: 'sample-3', title: '책 원고 4장 초안 작성', done: false, priority: '중간', category: '학습', due: '2026-05-02' },\n\t{ id: 'sample-4', title: '러닝 30분', done: true, priority: '낮음', category: '개인', due: null },\n];\n\nfunction getProp(prop) {\n\tif (!prop) return null;\n\tswitch (prop.type) {\n\t\tcase 'title':        return prop.title.map(t => t.plain_text).join('');\n\t\tcase 'rich_text':    return prop.rich_text.map(t => t.plain_text).join('');\n\t\tcase 'checkbox':     return prop.checkbox;\n\t\tcase 'select':       return prop.select?.name ?? null;\n\t\tcase 'date':         return prop.date?.start ?? null;\n\t\tdefault:             return null;\n\t}\n}\n\nfunction parseTodo(page) {\n\treturn {\n\t\tid: page.id,\n\t\ttitle: getProp(page.properties['할일']) || '제목 없음',\n\t\tdone: getProp(page.properties['완료']) ?? false,\n\t\tpriority: getProp(page.properties['우선순위']) || '낮음',\n\t\tcategory: getProp(page.properties['카테고리']) || '개인',\n\t\tdue: getProp(page.properties['마감일']),\n\t};\n}\n\nfunction formatDue(date) {\n\tif (!date) return null;\n\tconst d = new Date(date);\n\tif (Number.isNaN(d.getTime())) return null;\n\tconst today = new Date();\n\ttoday.setHours(0, 0, 0, 0);\n\tconst diff = Math.round((d - today) / (1000 * 60 * 60 * 24));\n\tconst label = `${d.getMonth() + 1}/${d.getDate()}`;\n\tif (diff < 0) return { label: `${label} (지남)`, overdue: true };\n\tif (diff === 0) return { label: `오늘 (${label})`, overdue: false };\n\tif (diff === 1) return { label: `내일 (${label})`, overdue: false };\n\treturn { label, overdue: false };\n}\n\nfunction TodoApp() {\n\tconst [todos, setTodos] = useState(FALLBACK_TODOS);\n\tconst [loading, setLoading] = useState(true);\n\tconst [error, setError] = useState(null);\n\tconst [tab, setTab] = useState('all');\n\n\tuseEffect(() => {\n\t\tif (!DB_ID || DB_ID === 'PASTE_TODOS_DB_ID_HERE') {\n\t\t\tsetLoading(false);\n\t\t\treturn;\n\t\t}\n\t\tfetch(`/api/notion/databases/${DB_ID}/query`, {\n\t\t\tmethod: 'POST',\n\t\t\theaders: { 'Content-Type': 'application/json' },\n\t\t\tbody: JSON.stringify({ page_size: 100 }),\n\t\t})\n\t\t\t.then(r => r.json())\n\t\t\t.then(data => {\n\t\t\t\tif (data?.results?.length) {\n\t\t\t\t\tsetTodos(data.results.map(parseTodo));\n\t\t\t\t}\n\t\t\t})\n\t\t\t.catch(err => {\n\t\t\t\tconsole.warn('[Todos] DB 조회 실패, FALLBACK 사용:', err.message);\n\t\t\t\tsetError('DB를 불러오지 못했습니다. 샘플 데이터를 표시합니다.');\n\t\t\t})\n\t\t\t.finally(() => setLoading(false));\n\t}, []);\n\n\tconst filtered = useMemo(() => {\n\t\tconst list = todos.filter(t => {\n\t\t\tif (tab === 'todo') return !t.done;\n\t\t\tif (tab === 'done') return t.done;\n\t\t\treturn true;\n\t\t});\n\t\treturn [...list].sort((a, b) => {\n\t\t\tif (a.done !== b.done) return a.done ? 1 : -1;\n\t\t\tconst pa = PRIORITY_ORDER[a.priority] ?? 9;\n\t\t\tconst pb = PRIORITY_ORDER[b.priority] ?? 9;\n\t\t\treturn pa - pb;\n\t\t});\n\t}, [todos, tab]);\n\n\tconst doneCount = todos.filter(t => t.done).length;\n\tconst totalCount = todos.length;\n\n\tif (loading) return <div className=\"state-msg\">불러오는 중...</div>;\n\n\treturn (\n\t\t<div className=\"app-wrap\">\n\t\t\t<header className=\"app-header\">\n\t\t\t\t<h1>✅ 할일 관리</h1>\n\t\t\t\t<p>오늘 할 일을 한눈에 정리하세요</p>\n\t\t\t</header>\n\n\t\t\t<div className=\"summary\">\n\t\t\t\t<span><strong>{totalCount}</strong> 전체</span>\n\t\t\t\t<span><strong>{totalCount - doneCount}</strong> 진행중</span>\n\t\t\t\t<span><strong>{doneCount}</strong> 완료</span>\n\t\t\t</div>\n\n\t\t\t<div className=\"tabs\">\n\t\t\t\t{TABS.map(t => (\n\t\t\t\t\t<button\n\t\t\t\t\t\tkey={t.key}\n\t\t\t\t\t\tclassName={`tab-btn ${tab === t.key ? 'active' : ''}`}\n\t\t\t\t\t\tonClick={() => setTab(t.key)}\n\t\t\t\t\t>\n\t\t\t\t\t\t{t.label}\n\t\t\t\t\t</button>\n\t\t\t\t))}\n\t\t\t</div>\n\n\t\t\t{error && <div className=\"state-msg error\">{error}</div>}\n\n\t\t\t{filtered.length === 0 ? (\n\t\t\t\t<div className=\"state-msg\">표시할 할일이 없습니다 🎉</div>\n\t\t\t) : (\n\t\t\t\t<div className=\"todo-list\">\n\t\t\t\t\t{filtered.map(todo => {\n\t\t\t\t\t\tconst due = formatDue(todo.due);\n\t\t\t\t\t\treturn (\n\t\t\t\t\t\t\t<div key={todo.id} className={`todo-card ${todo.done ? 'done' : ''}`}>\n\t\t\t\t\t\t\t\t<div className={`checkmark ${todo.done ? 'done' : ''}`}>\n\t\t\t\t\t\t\t\t\t{todo.done ? '✓' : ''}\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div className=\"todo-body\">\n\t\t\t\t\t\t\t\t\t<div className=\"todo-title\">{todo.title}</div>\n\t\t\t\t\t\t\t\t\t<div className=\"todo-meta\">\n\t\t\t\t\t\t\t\t\t\t<span className={`chip priority-${todo.priority}`}>{todo.priority}</span>\n\t\t\t\t\t\t\t\t\t\t<span className={`chip cat-${todo.category}`}>{todo.category}</span>\n\t\t\t\t\t\t\t\t\t\t{due && (\n\t\t\t\t\t\t\t\t\t\t\t<span className={`due ${due.overdue && !todo.done ? 'overdue' : ''}`}>📅 {due.label}</span>\n\t\t\t\t\t\t\t\t\t\t)}\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t);\n\t\t\t\t\t})}\n\t\t\t\t</div>\n\t\t\t)}\n\t\t</div>\n\t);\n}\n\nReactDOM.createRoot(document.getElementById('root')).render(<TodoApp />);";
+var __result=Babel.transform(__code,{filename:"app.tsx",presets:["react","typescript"],plugins:[__stripPlugin,__dedupePlugin,__jsxDecodePlugin],generatorOpts:{jsescOption:{minimal:true}},sourceType:"module"});
+var __s=document.createElement("script");__s.type="module";__s.textContent=__result.code;document.head.appendChild(__s);
+</script>
+</body></html>
